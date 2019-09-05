@@ -41,6 +41,8 @@ exports.signUp = (req, res, next) => {
 
 exports.signIn = (req, res , next) => {
     let fetchedUser;
+    console.log(req.body.username);
+    console.log(req.body.password);
     UserModel.findOne({ username: req.body.username })
     .then((user) => {
         if(!user){
@@ -63,6 +65,7 @@ exports.signIn = (req, res , next) => {
         }
         const token = jwt.sign(
             {
+                id: fetchedUser._id,
                 email: fetchedUser.email,
                 username: fetchedUser.username,
                 
@@ -72,7 +75,9 @@ exports.signIn = (req, res , next) => {
         return res.status(201).json({
             message: 'authenticated',
             expiresIn: 3600,
-    
+            id_user: fetchedUser._id,
+            email: fetchedUser.email,
+            username: fetchedUser.username,
             token: token
             });
     })

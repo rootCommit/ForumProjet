@@ -27,10 +27,10 @@ app.use(cors());
 app.use('/user', userRoute);
 
 app.get('/', (req, res) => {
-    console.log('fdp');
-    res.send('pd');
+    console.log('test');
+    res.send('test');
 });
 
 app.listen(3000, ()=>{
-    console.log("issou");
+    console.log("demarrage");
 });

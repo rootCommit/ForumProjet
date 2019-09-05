@@ -11,6 +11,6 @@ userRoute.post('/signUp', userController.signUp);
 
 
 
-userRoute.get('/login', userController.signIn);
+userRoute.post('/login', userController.signIn);
 
 module.exports = userRoute;
