@@ -1,0 +1,28 @@
+<div class="jumbotron">
+        <h1 class="display-4">S'inscrire <img src="https://risibank.fr/cache/stickers/d1/188-full.png"></h1>
+        <hr class="my-4">
+        <form #signUpForm="ngForm" (ngSubmit) = "onSignUp(signUpForm)">
+                <div class="signUpForm">
+                        <label>username:  </label> <br>
+                        <input type="text"
+                        ngModel
+                        name="username"> <br>
+
+                        <label>email: </label> <br>
+                        <input type="text" 
+                        ngModel
+                        name="email"
+                        > <br>
+                    
+                        <label>Mot de passe:  </label> <br>
+                        <input type="password"
+                        ngModel
+                        name="password"> <br>
+
+
+                        <button class="btn btn-dark">submit</button>
+                </div>
+        </form>
+        <hr class="my-4">
+        <p>Mot de passe oublié</p>
+    </div>

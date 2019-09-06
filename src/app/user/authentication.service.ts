@@ -4,11 +4,11 @@ import { Observable, of } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { User } from './User';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class AuthenticationService{
-    private isAuthenticated = false;
     private userLogged: User = null;
     private token: String;
     private expiration: Date;
@@ -29,23 +29,23 @@ export class AuthenticationService{
             token: string
         }>("http://127.0.0.1:3000/user/login", loginData)
         .subscribe(Response => {
-            console.log(Response.token);
             this.userLogged =  {username: Response.username, id:Response.id_user, email: Response.email};
             this.saveAuthData(Response.token, this.userLogged);
-            return Response;
+            
+            window.location.replace('/');
         },
         error => {
             console.log(error);
+            
         });
 
     }
-    getAuthState(): boolean{
-        return this.isAuthenticated;
-    }
-
+  
     isLogged(): boolean{
         const token = localStorage.getItem('token');
         const isLogged = !this.helper.isTokenExpired(token);
+        
+        console.log("expiration: " + this.helper.getTokenExpirationDate(token));
         return isLogged;
     }
 

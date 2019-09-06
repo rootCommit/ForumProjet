@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule(
     {
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
             FormsModule
         ],
         declarations: [
-            ConnectComponent
+            ConnectComponent,
+            SignUpComponent
         ],
         providers: [AuthenticationService]
     }
