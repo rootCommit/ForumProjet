@@ -7,6 +7,7 @@ import { AuthenticationService } from './authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserRoutingModule } from './user-routing.module';
+import { ListComponent } from './list/list.component';
 
 @NgModule(
     {
@@ -19,7 +20,8 @@ import { UserRoutingModule } from './user-routing.module';
         ],
         declarations: [
             ConnectComponent,
-            SignUpComponent
+            SignUpComponent,
+            ListComponent
         ],
         providers: [AuthenticationService]
     }

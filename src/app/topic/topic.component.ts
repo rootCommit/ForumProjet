@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../user/authentication.service';
+import { RouterStateSnapshot, Router } from '@angular/router';
 
 @Component({
   selector: 'app-topic',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopicComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthenticationService, private router: Router) { 
+    if(!this.authService.isLogged()){
+      this.authService.setUrl(this.router.url);
+    }
+  }
 
   ngOnInit() {
   }

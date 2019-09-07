@@ -15,6 +15,7 @@ export class AuthenticationService{
     private token: String;
     private expiration: Date;
     private helper = new JwtHelperService();
+    private url = "/";
 
     constructor(private http: HttpClient){}
 
@@ -27,6 +28,9 @@ export class AuthenticationService{
         } ; //On retourne un obserbble en cas d'erreur pour que l'appli continue quoi qu'il arrive
     }
 
+    public setUrl(url: string) : void{
+        this.url = url; 
+    }
 
     login(username: string, password: string): Observable<LogModel>{
       
@@ -37,7 +41,7 @@ export class AuthenticationService{
             this.userLogged =  {username: Response.username, id:Response.id_user, email: Response.email};
             this.saveAuthData(Response.token, this.userLogged);
             console.log(Response);
-            window.location.replace('/');
+            window.location.replace(this.url);
         }),
         catchError( this.handleError<LogModel>('login'))
         );
@@ -45,7 +49,7 @@ export class AuthenticationService{
     }
   
     isLogged(): boolean{
-        const token = localStorage.getItem('token');
+        const token: string = localStorage.getItem('token');
         if(token != undefined){
             const isLogged = !this.helper.isTokenExpired(token);
         
@@ -54,6 +58,13 @@ export class AuthenticationService{
             return false;
         }
        
+    }
+    getToken(): string{
+        if(this.isLogged()){
+            const token: string = localStorage.getItem('token');
+            return token;
+        }
+        return "";
     }
 
     saveAuthData(pToken: string, pUser: User): void{

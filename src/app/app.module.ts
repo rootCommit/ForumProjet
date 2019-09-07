@@ -9,6 +9,9 @@ import { UserModule } from './user/user.module';
 import { TopicComponent } from './topic/topic.component';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from './user/authentication.service';
+import { AuthGuard } from './auth-guard.service';
+import { AuthInterceptorService } from './user/connect/auth-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,11 +23,11 @@ import { AuthenticationService } from './user/authentication.service';
     BrowserModule,
     CommonModule,
     FormsModule,
-    UserModule,
     AppRoutingModule,
-    
+    UserModule
   ],
-  providers: [],
+  providers: [AuthGuard,
+              {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
