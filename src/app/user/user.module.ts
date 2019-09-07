@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { UserRoutingModule } from './user-routing.module';
 
 @NgModule(
     {
@@ -13,7 +14,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
             BrowserModule,
             CommonModule,
             HttpClientModule,
-            FormsModule
+            FormsModule,
+            UserRoutingModule
         ],
         declarations: [
             ConnectComponent,

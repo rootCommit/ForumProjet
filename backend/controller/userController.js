@@ -5,38 +5,64 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 exports.signUp = (req, res, next) => {
-    console.log(req.body.password);
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-        console.log(hashedPassword);
-        const user = new UserModel({
-            username: req.body.username,
-            password: hashedPassword,
-            email: req.body.email
-        });
-        user.save().then((result) => {
-            const token = jwt.sign(
-                {
-                    email: result.email,
-                    username: result.username,
-                    
-                },
-                'secret', { expiresIn: '1h' }
-            );
-            return res.status(201).json({
-                message: 'User created',
-                expiresIn: 3600,
-                token: token,
-                result: result
-            });
 
-        }).catch(error => {
-           return res.status(500).json({
-                message: "error"
+    UserModel.findOne({ username: req.body.username }).then(
+        user => {
+            if(user){
+                console.log(user);
+                return res.status(201).json(
+                    {message: "pseudo existant"}
+                );
             }
-            );
-        });
-    });
+            
+            else{
+                UserModel.findOne({email: req.body.email}).then(user => {
+                    if(user){
+                        console.log(user);
+                        return res.status(201).json(
+                            {message: "email existant"}
+                        );
+                    }else {
+                        bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+                            console.log(hashedPassword);
+                            const user = new UserModel({
+                                username: req.body.username,
+                                password: hashedPassword,
+                                email: req.body.email,
+                                dateCreation: new Date()
+                            });
+                            user.save().then((result) => {
+                                const token = jwt.sign(
+                                    {
+                                        email: result.email,
+                                        username: result.username,
+                                        id: result._id
+                                    },
+                                    'secret', { expiresIn: '1h' }
+                                );
+                                return res.status(201).json({
+                                    message: 'User created',
+                                    expiresIn: 3600,
+                                    token: token,
+                                    username: result.username,
+                                    email: result.email,
+                                    id: result._id
+                                });
+                            });
+                        });
+                    }
+                })
+                
+            } 
+        }).catch(error => {
+            res.status(500).json({
+                err: error
+            });
+        })
+    
 }
+    
+
 
 
 exports.signIn = (req, res , next) => {
@@ -67,8 +93,7 @@ exports.signIn = (req, res , next) => {
             {
                 id: fetchedUser._id,
                 email: fetchedUser.email,
-                username: fetchedUser.username,
-                
+                username: fetchedUser.username
             },
             'secret', { expiresIn: '1h' }
         );
@@ -87,6 +112,23 @@ exports.signIn = (req, res , next) => {
           error: err
         });
       });
+}
 
+exports.getUsers = (req, res, next) => {
+    let userList = [];
+    UserModel.find().sort({ dateCreation: -1 }).
+    then(result =>{
+        userList = result;
+        return res.status(201).json(
+            userList
+        );
+    })
+    .catch(error => {
+        return res.status(401).json({
+            message: "request failed",
+            error: error
+        });
+    });
+    
 }
 

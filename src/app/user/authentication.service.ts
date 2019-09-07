@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from './User';
 import { Router } from '@angular/router';
+import { LogModel } from './LogModel';
 
 
 @Injectable()
@@ -16,37 +18,42 @@ export class AuthenticationService{
 
     constructor(private http: HttpClient){}
 
+    private handleError<T>(operation: string = 'operation', result?: T){
+        return (error: any): Observable<T> =>
+        {
+            console.log(error);
+            console.log(`${operation} failed: ${error.message}`);
+            return of( result as T ); //l'objet reseulte et passé en param
+        } ; //On retourne un obserbble en cas d'erreur pour que l'appli continue quoi qu'il arrive
+    }
 
-    login(username: string, password: string){
+
+    login(username: string, password: string): Observable<LogModel>{
       
         const loginData = { username: username, password: password };
-        this.http.post<{
-            message: string,
-            expireIn: number,
-            id_user: string,
-            email: string,
-            username: string,
-            token: string
-        }>("http://127.0.0.1:3000/user/login", loginData)
-        .subscribe(Response => {
+            return this.http.post<LogModel>("http://127.0.0.1:3000/user/login", loginData)
+        .pipe(
+        tap(Response => {
             this.userLogged =  {username: Response.username, id:Response.id_user, email: Response.email};
             this.saveAuthData(Response.token, this.userLogged);
-            
+            console.log(Response);
             window.location.replace('/');
-        },
-        error => {
-            console.log(error);
-            
-        });
+        }),
+        catchError( this.handleError<LogModel>('login'))
+        );
 
     }
   
     isLogged(): boolean{
         const token = localStorage.getItem('token');
-        const isLogged = !this.helper.isTokenExpired(token);
+        if(token != undefined){
+            const isLogged = !this.helper.isTokenExpired(token);
         
-        console.log("expiration: " + this.helper.getTokenExpirationDate(token));
-        return isLogged;
+            return isLogged;
+        } else{
+            return false;
+        }
+       
     }
 
     saveAuthData(pToken: string, pUser: User): void{
@@ -67,6 +74,19 @@ export class AuthenticationService{
         this.clearAuthData();
         this.token = "";
         this.userLogged = null;
+    }
+
+    signUp(pUsername: string, pEmail:string, pPassword: string): Observable<LogModel>{
+        const userData = {
+            username: pUsername,
+            email: pEmail,
+            password: pPassword
+        } ;
+
+        return this.http.post<LogModel>("http://127.0.0.1:3000/user/signUp", userData).
+        pipe(
+            catchError(this.handleError<LogModel>('signUp'))
+        );
     }
 
 }

@@ -1,28 +1,47 @@
 <div class="jumbotron">
         <h1 class="display-4">S'inscrire <img src="https://risibank.fr/cache/stickers/d1/188-full.png"></h1>
+        <p *ngIf="errorMessage!=''" class="error text-danger">{{ errorMessage }}</p>
         <hr class="my-4">
         <form #signUpForm="ngForm" (ngSubmit) = "onSignUp(signUpForm)">
                 <div class="signUpForm">
                         <label>username:  </label> <br>
+
                         <input type="text"
                         ngModel
-                        name="username"> <br>
+                        pattern="^[a-zA-Z0-9]{3,25}$"
+                        required
+                        name="username"
+                        #username="ngModel">
+                        <div class="text-danger" [hidden]="username.valid || username.pristine" >
+                                username requis (1-25) et sans accent please
+                        </div>
+                        <br>
 
                         <label>email: </label> <br>
                         <input type="text" 
                         ngModel
+                        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                        required
                         name="email"
-                        > <br>
+                        #email="ngModel"
+                        >
+                        <div class="text-danger" [hidden]="email.valid || email.pristine">
+                                Veuillez saisir une adresse email
+                        </div>
+                        <br>
                     
                         <label>Mot de passe:  </label> <br>
                         <input type="password"
                         ngModel
-                        name="password"> <br>
+                        required
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"
+                        name="password"
+                        #password="ngModel"> <br>
+                        <div class="text-danger" [hidden]="password.valid || password.pristine" >
+                                password valid please
+                        </div>
 
-
-                        <button class="btn btn-dark">submit</button>
+                        <button [disabled]="!signUpForm.form.valid" class="btn btn-dark">submit</button>
                 </div>
         </form>
-        <hr class="my-4">
-        <p>Mot de passe oublié</p>
     </div>

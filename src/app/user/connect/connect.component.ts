@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ConnectComponent implements OnInit {
 
+  errorMessage = "";
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
@@ -21,9 +22,15 @@ export class ConnectComponent implements OnInit {
   onConnect(connectFormsModel: NgForm) : void{
     console.log(connectFormsModel);
     console.log("password: "+connectFormsModel.form.value.password);
-    this.authService.login(connectFormsModel.form.value.username, connectFormsModel.form.value.password);
+   this.authService.login(connectFormsModel.form.value.username, connectFormsModel.form.value.password).subscribe(
+     x => {
+      if(!this.authService.isLogged()){
+        this.errorMessage = "p";
+      }
+  
+     }
+   );
     
-
     
   }
 

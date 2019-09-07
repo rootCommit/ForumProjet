@@ -1,17 +1,20 @@
 <div class="jumbotron">
     <h1 class="display-4">Se connecter <img src="https://risibank.fr/cache/stickers/d717/71734-full.png"></h1>
+    <p *ngIf="errorMessage!=''" class="text-danger">{{ errorMessage }}</p>
     <hr class="my-4">
     <form #connexionForm="ngForm" (ngSubmit) = "onConnect(connexionForm)">
             <div class="connectForm">
                     <label>Pseudo:  </label> <br>
                     <input type="text"
+                    required
                     ngModel
                     name="username"> <br>
                 <label>Mot de passe:  </label> <br>
                 <input type="password"
                 ngModel
+                required
                 name="password"> <br>
-                <button class="btn btn-dark">submit</button>
+                <button [disabled]="!connexionForm.form.valid" class="btn btn-dark">submit</button>
             </div>
     </form>
     <hr class="my-4">

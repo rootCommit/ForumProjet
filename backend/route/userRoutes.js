@@ -9,8 +9,8 @@ let userRoute = express.Router();
 
 userRoute.post('/signUp', userController.signUp);
 
-
-
 userRoute.post('/login', userController.signIn);
+
+userRoute.get('/getUsers',userController.getUsers);
 
 module.exports = userRoute;

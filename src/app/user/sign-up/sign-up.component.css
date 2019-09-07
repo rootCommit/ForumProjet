@@ -10,7 +10,9 @@ h1{
 .signUpForm{
     text-align: center;
 }
-
+.error{
+    text-align: center
+}
 input{
     width: 100%;
     text-align: center;
