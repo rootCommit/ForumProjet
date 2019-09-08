@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthenticationService } from './authentication.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserRoutingModule } from './user-routing.module';
 import { ListComponent } from './list/list.component';
+import { AuthInterceptorService } from './connect/auth-interceptor.service';
+import { HttpInterceptorError } from '../HttpInterceptorError';
 
 @NgModule(
     {
@@ -23,7 +25,9 @@ import { ListComponent } from './list/list.component';
             SignUpComponent,
             ListComponent
         ],
-        providers: [AuthenticationService]
+        providers: [AuthenticationService,
+            {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+            {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorError, multi: true}]
     }
 )
 export class UserModule{}

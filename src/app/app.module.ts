@@ -12,22 +12,31 @@ import { AuthenticationService } from './user/authentication.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthInterceptorService } from './user/connect/auth-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BootStrapModule } from './bootstrap.module';
+import { ErrorComponent } from './error/error.component';
+import { HttpInterceptorError } from './HttpInterceptorError';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ErrorComponent,
     HeaderComponent,
-    TopicComponent
+    TopicComponent,
+    
   ],
   imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
+    BootStrapModule,
     AppRoutingModule,
     UserModule
   ],
   providers: [AuthGuard,
-              {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
-  bootstrap: [AppComponent]
+              {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+              {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorError, multi: true}],
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
+
 })
 export class AppModule { }

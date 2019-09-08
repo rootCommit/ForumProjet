@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbButtonsModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule(
     {
-        imports: []
+        imports: [NgbModalModule]
     }
 )
 export class BootStrapModule{}
