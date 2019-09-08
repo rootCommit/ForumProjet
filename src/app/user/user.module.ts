@@ -10,6 +10,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { ListComponent } from './list/list.component';
 import { AuthInterceptorService } from './connect/auth-interceptor.service';
 import { HttpInterceptorError } from '../HttpInterceptorError';
+import { UserService } from './user.service';
 
 @NgModule(
     {
@@ -26,8 +27,8 @@ import { HttpInterceptorError } from '../HttpInterceptorError';
             ListComponent
         ],
         providers: [AuthenticationService,
-            {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
-            {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorError, multi: true}]
+            UserService,
+           ]
     }
 )
 export class UserModule{}

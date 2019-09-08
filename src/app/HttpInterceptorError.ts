@@ -17,6 +17,7 @@ export class HttpInterceptorError implements HttpInterceptor{
         return handler.handle(req).pipe(
           catchError((error:HttpErrorResponse) => {
             let errorMessage = 'Erreur inconnu';
+            console.log(error);
            if(error.error.message == undefined){
             this.modal.open(ErrorComponent);
 

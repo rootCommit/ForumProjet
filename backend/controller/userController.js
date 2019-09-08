@@ -10,7 +10,7 @@ exports.signUp = (req, res, next) => {
         user => {
             if(user){
                 console.log(user);
-                return res.status(201).json(
+                return res.status(401).json(
                     {message: "pseudo existant"}
                 );
             }
@@ -19,7 +19,7 @@ exports.signUp = (req, res, next) => {
                 UserModel.findOne({email: req.body.email}).then(user => {
                     if(user){
                         console.log(user);
-                        return res.status(201).json(
+                        return res.status(401).json(
                             {message: "email existant"}
                         );
                     }else {
@@ -118,7 +118,14 @@ exports.getUsers = (req, res, next) => {
     let userList = [];
     UserModel.find().sort({ dateCreation: -1 }).
     then(result =>{
-        userList = result;
+        userList = result.map(x => {
+            return user = {
+                id: x._id,
+                username: x.username,
+                email: x.email
+            }
+        });
+        console.log(userList);
         return res.status(201).json(
             userList
         );
