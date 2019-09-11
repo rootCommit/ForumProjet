@@ -3,7 +3,7 @@ const postOwnerModel = require('../model/postOwnerModel');
 const htmlspecialschars = require('htmlspecialchars');
 
 exports.createTopic = (req, res, next) => {
-    //Verifier les caractere spéciaux
+    //Verifier les caractere spéciaux avec htmlspecialchar surtout avec les posts
     //Creer un post (le poste de l'op)
     //creer le topic puis lui attribuer le post
     const postOwner = new postOwnerModel({
@@ -17,12 +17,21 @@ exports.createTopic = (req, res, next) => {
             title: req.title,
             author: req.userData.userId,
             post: pOCreated._id,
-            created_at: new Date()
+            created_at: pOCreated.created_at
         });
-        res.status(201).json({
-            topic: topic,
-            op: pOCreated
+        topic.save().then((topicCreated => {
+            res.status(201).json({
+                topic: topic,
+                op: pOCreated
+            });
+        })).catch((err) => {
+            res.status(401).json(
+                {
+                    message: err
+                }
+            );
         });
+       
     })
     .catch( (err) => {
         res.status(401).json({
