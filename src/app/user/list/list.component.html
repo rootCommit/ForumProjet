@@ -3,7 +3,12 @@
     <hr class="my-4">
     <div *ngIf='usersList.length != 0' class='userList'>
         <ul class="list-group" *ngFor='let user of usersList'>
-            <li class="list-group-item"> <img class="avatar" src="http://image.noelshack.com/fichiers/2018/51/1/1545056314-capture.png"> {{ user.username }}</li>
+            <li class="list-group-item"> 
+                <img class="avatar" src="http://image.noelshack.com/fichiers/2018/51/1/1545056314-capture.png"> 
+                {{ user.username }}     <hr class="my-4">
+
+                <i>Joined: {{ user.created_at }}</i>
+            </li>
         </ul>
     </div>
     

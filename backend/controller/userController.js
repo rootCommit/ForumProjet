@@ -122,7 +122,8 @@ exports.getUsers = (req, res, next) => {
             return user = {
                 id: x._id,
                 username: x.username,
-                email: x.email
+                email: x.email,
+                created_at: x.dateCreation
             }
         });
         console.log(userList);

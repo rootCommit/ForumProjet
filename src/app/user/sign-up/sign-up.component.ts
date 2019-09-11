@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
           this.errorMessage = x.message;
         }
         if(x.token != undefined){
-          let userLogged = {username: x.username, id:x.id_user, email: x.email};
+          let userLogged = {username: x.username, id:x.id_user, email: x.email, created_at: new Date()};
           this.authService.saveAuthData(x.token, userLogged);
             window.location.replace('/')
         }

@@ -38,7 +38,7 @@ export class AuthenticationService{
             return this.http.post<LogModel>("http://127.0.0.1:3000/user/login", loginData)
         .pipe(
         tap(Response => {
-            this.userLogged =  {username: Response.username, id:Response.id_user, email: Response.email};
+            this.userLogged =  {username: Response.username, id:Response.id_user, email: Response.email, created_at: new Date()};
             this.saveAuthData(Response.token, this.userLogged);
             console.log(Response);
             window.location.replace(this.url);
@@ -91,7 +91,8 @@ export class AuthenticationService{
         const userData = {
             username: pUsername,
             email: pEmail,
-            password: pPassword
+            password: pPassword,
+            date: new Date()
         } ;
 
         return this.http.post<LogModel>("http://127.0.0.1:3000/user/signUp", userData).

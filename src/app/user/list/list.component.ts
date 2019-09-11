@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../User';
+import { htmlspecialchars } from 'htmlspecialchars';
 
 /**
  * Listing des users nouveaux users
@@ -21,6 +22,8 @@ export class ListComponent implements OnInit {
         this.usersList = x;
       }
     );
+    htmlspecialchars("<script>alert('issou')</script>");
+
   }
 
 
