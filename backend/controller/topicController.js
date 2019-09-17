@@ -21,8 +21,11 @@ exports.createTopic = (req, res, next) => {
         });
         topic.save().then((topicCreated => {
             res.status(201).json({
-                topic: topic,
-                op: pOCreated
+                id: topicCreated._id,
+                title: topicCreated.title,
+                authorId: topicCreated.author,
+                idPostOwner: topicCreated.post,
+                created_at: topicCreated.created_at,
             });
         })).catch((err) => {
             res.status(401).json(

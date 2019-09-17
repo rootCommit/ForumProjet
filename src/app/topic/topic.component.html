@@ -5,3 +5,17 @@
         <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
         <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
 </div>
+
+<form class="editionZone" #writeTopic="ngForm" *ngIf="this.authService.isLogged()">
+                <label>Titre</label><br>
+                <input [(ngModel)]="title" name="titre" type='text'> <br> <br>
+                <textarea tabindex="3" rows="4" name="bodyCorp" [(ngModel)]="messageCorpse"></textarea>
+                <br>
+                <button (click) = "test()">test</button>
+                <div class="jumbotron">
+                        <h1>{{title}}</h1>
+                        <hr>
+                        <div [innerHTML]="messageCorpse | preEdit "></div>
+                </div>
+</form>
+
