@@ -14,15 +14,15 @@ import { htmlspecialchars } from 'htmlspecialchars';
 export class ListComponent implements OnInit {
 
   constructor( private userService: UserService ) { }
-  usersList: User[] = [];
+  usersList: User[];
 
   ngOnInit() {
+    this.usersList = [];
     this.userService.getUsers().subscribe(
       x => {
         this.usersList = x;
       }
     );
-    htmlspecialchars("<script>alert('issou')</script>");
 
   }
 

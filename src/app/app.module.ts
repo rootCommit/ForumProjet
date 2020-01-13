@@ -16,6 +16,7 @@ import { BootStrapModule } from './bootstrap.module';
 import { ErrorComponent } from './error/error.component';
 import { HttpInterceptorError } from './HttpInterceptorError';
 import { PreEditPipe } from './topic/preEdit.pipe';
+import { TopicService } from './topic/topic.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PreEditPipe } from './topic/preEdit.pipe';
     
   ],
   providers: [AuthGuard,
+              TopicService,
               {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
               {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorError, multi: true}],
   bootstrap: [AppComponent],

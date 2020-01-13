@@ -8,14 +8,14 @@
 
 <form class="editionZone" #writeTopic="ngForm" *ngIf="this.authService.isLogged()">
                 <label>Titre</label><br>
-                <input [(ngModel)]="title" name="titre" type='text'> <br> <br>
-                <textarea tabindex="3" rows="4" name="bodyCorp" [(ngModel)]="messageCorpse"></textarea>
+                <input [(ngModel)]="topic.title" name="titre" type='text'> <br> <br>
+                <textarea tabindex="3" rows="4" name="bodyCorp" [(ngModel)]="postOwner.messsage"></textarea>
                 <br>
-                <button (click) = "test()">test</button>
+                <button (click) = "onSubmit()">Poster ou cancer</button>
                 <div class="jumbotron">
-                        <h1>{{title}}</h1>
+                        <h1>{{topic.title}}</h1>
                         <hr>
-                        <div [innerHTML]="messageCorpse | preEdit "></div>
+                        <div [innerHTML]="postOwner.messsage | preEdit "></div>
                 </div>
 </form>
 

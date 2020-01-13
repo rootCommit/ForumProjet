@@ -28,7 +28,7 @@ app.use(cors());
 
 app.use('/user', userRoute);
 
-app.user('/topic', topicRoute);
+app.use('/topic', topicRoute);
 
 app.get('/', (req, res) => {
     console.log('test');
