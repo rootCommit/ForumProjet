@@ -4,6 +4,8 @@ const cors =  require('cors');
 
 const userRoute = require('./route/userRoutes');
 
+const topicRoute = require('./route/topicRoutes');
+
 const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
@@ -25,6 +27,8 @@ app.use(cors());
 
 
 app.use('/user', userRoute);
+
+app.use('/topic', topicRoute);
 
 app.get('/', (req, res) => {
     console.log('test');

@@ -15,6 +15,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BootStrapModule } from './bootstrap.module';
 import { ErrorComponent } from './error/error.component';
 import { HttpInterceptorError } from './HttpInterceptorError';
+import { PreEditPipe } from './topic/preEdit.pipe';
+import { TopicService } from './topic/topic.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,7 @@ import { HttpInterceptorError } from './HttpInterceptorError';
     ErrorComponent,
     HeaderComponent,
     TopicComponent,
-    
+    PreEditPipe
   ],
   imports: [
     BrowserModule,
@@ -30,9 +32,11 @@ import { HttpInterceptorError } from './HttpInterceptorError';
     FormsModule,
     BootStrapModule,
     AppRoutingModule,
-    UserModule
+    UserModule,
+    
   ],
   providers: [AuthGuard,
+              TopicService,
               {provide:HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
               {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorError, multi: true}],
   bootstrap: [AppComponent],

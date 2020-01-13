@@ -81,6 +81,10 @@ export class AuthenticationService{
         localStorage.removeItem('id');
     }
 
+    getUserLoggedId(){
+        return localStorage.getItem('id');
+    }
+
     logout(){
         this.clearAuthData();
         this.token = "";
